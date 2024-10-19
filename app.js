@@ -9,10 +9,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-// Initialize Twilio
+
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// Google Calendar API setup
+
 const calendar = google.calendar('v3');
 const auth = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -21,25 +21,25 @@ const auth = new google.auth.OAuth2(
 );
 auth.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
 
-// Function to create an appointment in Google Calendar
+
 async function createGoogleCalendarEvent(appointmentDetails) {
     const calendarEvent = {
         summary: 'Hair Salon Appointment',
         location: 'Riya\'s Salon',
         description: appointmentDetails.description,
         start: {
-            dateTime: appointmentDetails.startTime, // e.g., '2024-10-20T10:00:00+05:30'
+            dateTime: appointmentDetails.startTime, 
             timeZone: 'Asia/Kolkata',
         },
         end: {
-            dateTime: appointmentDetails.endTime, // e.g., '2024-10-20T11:00:00+05:30'
+            dateTime: appointmentDetails.endTime, 
             timeZone: 'Asia/Kolkata',
         },
         reminders: {
             useDefault: false,
             overrides: [
-                { method: 'email', minutes: 1440 }, // 1 day before
-                { method: 'popup', minutes: 10 }, // 10 minutes before
+                { method: 'email', minutes: 1440 }, 
+                { method: 'popup', minutes: 10 }, 
             ],
         },
     };
@@ -56,7 +56,7 @@ async function createGoogleCalendarEvent(appointmentDetails) {
     }
 }
 
-// Function to send email
+
 async function sendEmail(appointmentDetails) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -81,7 +81,7 @@ async function sendEmail(appointmentDetails) {
     }
 }
 
-// Function to send SMS
+
 async function sendSMS(appointmentDetails) {
     const message = await twilioClient.messages.create({
         body: `Your appointment at Riya's Salon is confirmed for ${appointmentDetails.startTime}.`,
@@ -92,7 +92,7 @@ async function sendSMS(appointmentDetails) {
     console.log('SMS sent successfully:', message.sid);
 }
 
-// Endpoint to create an appointment
+
 app.post('/book-appointment', async (req, res) => {
     const appointmentDetails = req.body;
     
