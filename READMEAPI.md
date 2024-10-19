@@ -1,4 +1,4 @@
-# Riya's Salon Appointment Booking System
+# Appointment Booking System
 
 This project is an appointment booking system for Riya's Salon, integrated with Google Calendar and Outlook. It allows customers to book appointments and sends notifications via email and SMS.
 
