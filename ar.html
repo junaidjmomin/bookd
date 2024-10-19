@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin : 0; overflow: hidden;">
+    <a-scene embedded arjs>
+        <a-marker preset="hiro">
+            <a-image src="your-hairstyle-image.png" position="0 0 0" rotation="-90 0 0" width="1"></a-image>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+</html>
